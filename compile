@@ -1,0 +1,4 @@
+#!/bin/bash
+
+g++ ./src/main.cpp ./src/frame.cpp -I ./include/ -o run `wx-config --cxxflags --libs std,richtext`
+
