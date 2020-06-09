@@ -3,9 +3,9 @@
 #include "mainWindow.h"
 
 appFrame::appFrame(const wxString& title)
-    : wxFrame(NULL, -1, title, wxPoint(-1, -1), wxDefaultSize) {
+    : wxFrame(NULL, -1, title) {
 
-        wxSplitterWindow *splits = new wxSplitterWindow(this, wxID_ANY);
+        wxSplitterWindow *splits = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D | wxSP_LIVE_UPDATE);
         splits->SetMinimumPaneSize(50);
         
         wxPanel *masterPanel = new wxPanel(this, -1);
@@ -17,14 +17,31 @@ appFrame::appFrame(const wxString& title)
         wxPanel *topBarPanel = new wxPanel(masterPanel, -1);
         wxBoxSizer *topBarSizer = new wxBoxSizer(wxHORIZONTAL);
 
-        wxStaticText *sites = new wxStaticText(topBarPanel, -1, wxT("Sites"));
-        wxStaticText *siteHeader = new wxStaticText(topBarPanel, -1,
-                wxT("Current"));
+        wxStaticText *sites = new wxStaticText(
+                topBarPanel,
+                -1,
+                wxString("Sites"),
+                wxDefaultPosition,
+                wxDefaultSize,
+                wxALIGN_LEFT
+                );
+        wxStaticText *siteHeader = new wxStaticText(
+                topBarPanel,
+                -1,
+                wxT("Current"),
+                wxDefaultPosition,
+                wxDefaultSize,
+                wxALIGN_CENTER
+                );
+
+        // Sizer Flags is currently unused 
         wxSizerFlags topBarStyles(0);
-        topBarStyles.Expand();
+        topBarStyles.Expand().Border(wxALL, 10).Center();
+
         topBarSizer->Add(sites, topBarStyles);
-//        topBarSizer->Add(siteHeader, topBarStyles);
-        topBarPanel->SetSizer(topBarSizer);
+        topBarSizer->Add(siteHeader, topBarStyles);
+        topBarPanel->SetSizerAndFit(topBarSizer);
+
         masterSizer->Add(topBarPanel, 0, wxEXPAND);
 
         /*
@@ -50,19 +67,13 @@ appFrame::appFrame(const wxString& title)
         /*
          * Splitter
          */
-        splits->SplitVertically(sidePanel, viewPanel);
+        splits->SplitVertically(sidePanel, viewPanel, 50);
         masterSizer->Add(splits, 0, wxEXPAND);
-        SetSizerAndFit(masterSizer);
+        masterPanel->SetSizerAndFit(masterSizer);
 
-//        masterSizer->Add(topBar, 0, wxEXPAND);
-//        masterSizer->Add(sideBar, 1, wxEXPAND);
-//        masterSizer->Add(viewMain, 0, wxEXPAND);
-
-//        masterPanel->SetSizerAndFit(masterSizer);
-        
         CreateStatusBar();
         SetStatusText("Testing");
-        Center();
-        Layout();
+//        Center();
+//        Layout();
     }
 

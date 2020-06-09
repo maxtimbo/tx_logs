@@ -5,6 +5,7 @@
 #include <wx/richtext/richtextctrl.h>
 #include <wx/sizer.h>
 #include <wx/splitter.h>
+#include <wx/datectrl.h>
 
 class sitesLog: public wxNotebook {
     public:
